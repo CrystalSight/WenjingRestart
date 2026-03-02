@@ -8,8 +8,14 @@ import pyautogui
 import psutil
 import configparser
 
-# 配置路径：始终保存在脚本同级目录
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 兼容打包后的路径获取
+if getattr(sys, 'frozen', False):
+    # 如果是打包后的 exe 运行
+    SCRIPT_DIR = os.path.dirname(sys.executable)
+else:
+    # 如果是源代码运行
+    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 CONFIG_FILE = os.path.join(SCRIPT_DIR, "wenJingRestartConfig.ini")
 
 # 性能优化：关闭 pyautogui 的失败安全提示（避免弹窗阻塞挂机）
